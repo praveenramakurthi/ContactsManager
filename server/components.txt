@@ -1,0 +1,78 @@
+Import File UI:
+ImportButton: Button component to trigger the file import process.
+ImportDialog: Dialog/modal component for the import workflow.
+FileDropArea: Component to allow users to drag and drop files for import.
+
+Delete Contacts UI:
+CheckboxButton: Component to render a checkbox for selecting contacts.
+DeleteButton: Button component to initiate the deletion process.
+DeleteDialog: Dialog/modal component for confirming the deletion of selected contacts.
+
+Contacts Page:
+ContactList: Component to display a list of contacts.
+ContactItem: Component to render individual contact information.
+Pagination: Component to navigate through multiple pages of contacts.
+
+Tooltip:
+Tooltip: Component to display additional information when hovering over certain elements.
+
+Search Bar:
+SearchBar: Component to input search queries.
+SearchResult: Component to display search results.
+
+Sign-in/Sign-up Pages:
+SignInForm: Component to input user credentials for signing in.
+SignUpForm: Component to input user details for signing up.
+
+Logout:
+LogoutButton: Button component to initiate the logout process.
+LogoutDialog: Dialog/modal component for confirming logout.
+These are the basic React components you might need for your contacts manager application. Depending on your specific requirements and design, you may need to further customize or expand these components.
+
+
+User
+Create a sequence diagram which lists the interactions between each of the frontend and backend components
+
+Frontend               Backend
+    |                      |
+    |     /GET Contacts    |
+    |--------------------->|
+    |                      |
+    |     Contacts List    |
+    |
+
+css
+|   Display Contacts   |
+|
+
+sql
+|       /POST New       |
+|    Contact Creation   |
+|--------------------->|
+|                      |
+|      Confirmation    |
+|        Message       |
+|
+
+|      /DELETE         |
+|   Contact Deletion    |
+|--------------------->|
+|                      |
+|      Confirmation    |
+|        Message       |
+|                      |
+
+
+This diagram represents a high-level overview of interactions between frontend and backend components. Here's a breakdown of the interactions:
+
+1. The frontend initiates a request to the backend to retrieve contacts using a `/GET` request.
+2. The backend processes the request and fetches contacts from the database.
+3. The backend sends the retrieved contacts data back to the frontend.
+4. The frontend displays the contacts list to the user.
+5. When a user adds a new contact, the frontend sends a `/POST` request to the backend with the new contact data.
+6. The backend processes the request, adds the new contact to the database, and sends a confirmation message back to the frontend.
+7. When a user deletes a contact, the frontend sends a `/DELETE` request to the backend with the contact ID to be deleted.
+8. The backend processes the request, deletes the specified contact from the database, and sends a confirmation message back to the frontend.
+
+This sequence diagram illustrates the basic interactions between frontend and backend components for retrieving, creating, and deleting contacts in the contacts manager application. Depending on your specific requirements and implementation details, the interactions and components may vary.
+

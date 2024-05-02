@@ -1,0 +1,176 @@
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.left-container {
+  position: absolute;
+  width: 231px;
+  height: 551px;
+  gap: 0px;
+  opacity: 0px;
+  background: #cef3ff;
+}
+.logo {
+  width: 83px;
+  height: 61px;
+  top: 13px;
+  left: 50px;
+  gap: 0px;
+  opacity: 1px;
+}
+.right-container {
+  position: absolute;
+  left: 232px;
+  border: 1px solid black;
+  /* width: 100%; */
+  /* background: red; */
+}
+input[type="search"] {
+  padding-left: 45px;
+  top: 23px;
+  height: 35px;
+  position: absolute;
+  left: 442px;
+  width: 350px;
+  /* font-style:Titillium Web; */
+  border: none;
+  background: #f2f2f2;
+  font-style: Titanium;
+  font-size: medium;
+  border-radius: 6px;
+}
+.left-container i {
+  left: 63px;
+  position: absolute;
+  bottom: 32px;
+  cursor: pointer;
+}
+
+.top-buttons {
+  display: flex;
+  left: 672px;
+  position: absolute;
+  top: 84px;
+  justify-content: space-between;
+  gap: 5px;
+  width: 323px;
+}
+tr {
+  margin-bottom: 10px;
+}
+
+.delete,
+.import,
+.export {
+  width: 80px;
+  font-family: Titillium Web;
+  font-size: 15px;
+  font-weight: 400;
+  cursor: pointer;
+  line-height: 27.38px;
+  text-align: left;
+  border: none;
+  background-color: white;
+  float: center;
+  box-shadow: 0 2px 4px rgba(0.1, 0.1, 0.1, 0.1);
+}
+.table-container {
+  width: 976px;
+  top: 125px;
+  height: 100%;
+  position: absolute;
+  left: 20px;
+  background-color: #fbfbfb;
+  border-collapse: collapse;
+}
+.table-head {
+  background-color: #b2dfff;
+  height: 50px;
+}
+.table-container th {
+  padding: 8px; /* Adjust padding as needed */
+  /* background-color: #f2f2f2; */
+  border: none; /* Remove border */
+  position: relative; /* Ensure relative positioning for the pseudo-element */
+}
+.table-container th:not(:first-child)::before {
+  content: ""; /* Create a pseudo-element */
+  position: absolute;
+  height: 20px;
+  left: 11px; /* Adjust the position to align with the left edge of the th */
+  top: 16px;
+  bottom: 0;
+  width: 1px; /* Set the width of the line */
+  background-color: black; /* Set the color of the line */
+}
+
+/* Adjust the position of the line */
+.table-container th:nth-child(2)::before {
+  left: calc(
+    25% - 14.5px
+  ); /* Adjust position relative to the right edge of the first th */
+}
+
+.table-container th:nth-child(3)::before {
+  left: calc(
+    50% - 45.5px
+  ); /* Adjust position relative to the right edge of the second th */
+}
+
+.table-container th:nth-child(4)::before {
+  left: calc(
+    75% - 74.5px
+  ); /* Adjust position relative to the right edge of the third th */
+}
+
+.table-container th:nth-child(5)::before {
+  left: calc(
+    75% - 54.5px
+  ); /* Adjust position relative to the right edge of the third th */
+}
+
+.table-container th:nth-child(6)::before {
+  left: calc(
+    75% - 118.5px
+  ); /* Adjust position relative to the right edge of the third th */
+}
+
+.table-container th:nth-child(7)::before {
+  left: calc(
+    75% - 70.5px
+  ); /* Adjust position relative to the right edge of the third th */
+}
+tr.table-data:not(:last-child) {
+  padding-bottom: 10px; /* Add padding-bottom to all rows except the last one */
+
+}
+tbody {
+  position: absolute;
+  padding-left: 26px;
+  padding-bottom: 10px;
+  width: 375vx;
+  /* background-color: blue; */
+  padding-top: 10px;
+}
+.contact1 {
+  padding-right: 45px; /* Adjust padding for the first field */
+}
+
+.contact2 {
+  padding-right: 107px; /* Adjust padding for the second field */
+}
+
+.contact3 {
+  padding-right: 61px; /* Adjust padding for the third field */
+}
+
+.contact4 {
+  padding-right: 58px; /* Adjust padding for the third field */
+}
+.contact5 {
+  padding-right: 56px; /* Adjust padding for the third field */
+}
+.contact6 {
+  padding-right: 118px;
+}

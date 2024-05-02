@@ -1,0 +1,10 @@
+backend/
+  |- models/
+  |    |- user.js
+  |    |- contact.js
+  |
+  |- routes/
+  |    |- authRoutes.js
+  |    |- contactRoutes.js
+  |
+  |- app.js

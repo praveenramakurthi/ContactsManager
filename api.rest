@@ -1,0 +1,24 @@
+POST http://localhost:8080/api/register
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "vijay@gmail.com",
+    "password": "vijay123",
+    "confirmPassword": "vijay123"
+}
+
+###
+POST http://localhost:8080/api/login
+Accept: application/json
+Content-Type: application/json
+{
+    "email": "vijay@gmail.com",
+    "password": "vijay123",
+}
+###
+GET http://localhost:8080/users/contacts/all
+
+Content-Type:application/json
+Accept:application/json
+
