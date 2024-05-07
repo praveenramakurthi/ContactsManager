@@ -63,22 +63,21 @@ tr {
 .delete,
 .import,
 .export {
-  width: 80px;
+  width: 102px;
+  float: right;
   font-family: Titillium Web;
   font-size: 15px;
   font-weight: 400;
   cursor: pointer;
   line-height: 27.38px;
-  text-align: left;
   border: none;
   background-color: white;
-  float: center;
   box-shadow: 0 2px 4px rgba(0.1, 0.1, 0.1, 0.1);
 }
 .table-container {
   width: 976px;
+  height: 425px;
   top: 125px;
-  height: 100%;
   position: absolute;
   left: 20px;
   background-color: #fbfbfb;
@@ -88,63 +87,13 @@ tr {
   background-color: #b2dfff;
   height: 50px;
 }
-.table-container th {
-  padding: 8px; /* Adjust padding as needed */
-  /* background-color: #f2f2f2; */
-  border: none; /* Remove border */
-  position: relative; /* Ensure relative positioning for the pseudo-element */
-}
-.table-container th:not(:first-child)::before {
-  content: ""; /* Create a pseudo-element */
-  position: absolute;
-  height: 20px;
-  left: 11px; /* Adjust the position to align with the left edge of the th */
-  top: 16px;
-  bottom: 0;
-  width: 1px; /* Set the width of the line */
-  background-color: black; /* Set the color of the line */
-}
+/* .table-container th {
+ 
+  position: relative; 
+} */
 
-/* Adjust the position of the line */
-.table-container th:nth-child(2)::before {
-  left: calc(
-    25% - 14.5px
-  ); /* Adjust position relative to the right edge of the first th */
-}
 
-.table-container th:nth-child(3)::before {
-  left: calc(
-    50% - 45.5px
-  ); /* Adjust position relative to the right edge of the second th */
-}
 
-.table-container th:nth-child(4)::before {
-  left: calc(
-    75% - 74.5px
-  ); /* Adjust position relative to the right edge of the third th */
-}
-
-.table-container th:nth-child(5)::before {
-  left: calc(
-    75% - 54.5px
-  ); /* Adjust position relative to the right edge of the third th */
-}
-
-.table-container th:nth-child(6)::before {
-  left: calc(
-    75% - 118.5px
-  ); /* Adjust position relative to the right edge of the third th */
-}
-
-.table-container th:nth-child(7)::before {
-  left: calc(
-    75% - 70.5px
-  ); /* Adjust position relative to the right edge of the third th */
-}
-tr.table-data:not(:last-child) {
-  padding-bottom: 10px; /* Add padding-bottom to all rows except the last one */
-
-}
 tbody {
   position: absolute;
   padding-left: 26px;
@@ -153,24 +102,24 @@ tbody {
   /* background-color: blue; */
   padding-top: 10px;
 }
-.contact1 {
-  padding-right: 45px; /* Adjust padding for the first field */
+.table-data {
+  justify-content: space-between;
+  display: flex;
+  /* position: absolute; */
+  padding-right: 20px;
+  width: 929px;
+  margin-bottom: 10px;
 }
 
-.contact2 {
-  padding-right: 107px; /* Adjust padding for the second field */
+th:nth-child(1) {
+  width: 20px; /* Larger gap between every 2nd field */
+  padding-right: 100px;
 }
+.designation{
+  position: relative;
+  top: 15px;
+  float: left;
+}
+.seperator2{
 
-.contact3 {
-  padding-right: 61px; /* Adjust padding for the third field */
-}
-
-.contact4 {
-  padding-right: 58px; /* Adjust padding for the third field */
-}
-.contact5 {
-  padding-right: 56px; /* Adjust padding for the third field */
-}
-.contact6 {
-  padding-right: 118px;
 }

@@ -1,7 +1,49 @@
-import React from 'react'
-import './signin.css'
+import React, { useState,useContext } from 'react'
+import './signin.css';
+// import 'AuthContext' from "../context/AuthContext";
 export default function SignUp() {
+    const [credentials, setCredentials] = useState({ email: "", password: "", confirmPassword: "" });
+    const [error, setError] = useState("");
 
+    const handleSignup = async (e) => {
+        e.preventDefault();
+        if (!credentials.email || !credentials.password || !credentials.confirmPassword) {
+            setError("Please fill in all fields");
+            return;
+        }
+        if (credentials.password !== credentials.confirmPassword) {
+            setError("Passwords do not match");
+            return;
+        }
+        try {
+            const response = await fetch("http://localhost:8080/api/register", {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(credentials)
+            });
+            if (!response.ok) {
+                const errorMessage = await response.json();
+                setError(errorMessage.message)
+            }
+            else {
+                const data = await response.json();
+                alert("User created Successfully");
+                window.location.href = "/";
+            }
+        }
+        catch (err) {
+            setError('An error occurred. Please try again.');
+            console.error('Error during signup:', err);
+        }
+    }
+
+    const handleInputChange = (e) => {
+        const {name,value} = e.target;
+        setCredentials({...credentials,[name]:value});
+    }
     return (
         <div>
             {/* <h1>Logo</h1> */}
@@ -139,11 +181,18 @@ export default function SignUp() {
                         <div className="eclipse eclipse-7"></div>
                     </div>
                 </div>
-                <form className="signin-form" action="#" method="get">
+                <form className="signin-form" action="" method="POST" onSubmit={handleSignup}>
                     <p>Create New Account</p>
-                    <input type="email" name="email" placeholder="Mail ID" />
-                    <input type="password" name="Password" placeholder="Password" />
-                    <input type="password" name="Password" placeholder="Confirm Password" />
+                    {error && <div className="error-message">{error}</div>}
+                    <input type="email" name="email" placeholder="Mail ID"
+                        value={credentials.email}
+                        onChange={handleInputChange} />
+                    <input type="password" name="Password" placeholder="Password"
+                        value={credentials.password}
+                        onChange={handleInputChange} />
+                    <input type="password" name="Password" placeholder="Confirm Password"
+                        value={credentials.confirmPassword}
+                        onChange={handleInputChange} />
                     <button type="submit">Sign Up</button>
                 </form>
             </div>

@@ -3,22 +3,38 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "email": "vijay@gmail.com",
-    "password": "vijay123",
-    "confirmPassword": "vijay123"
+    "email": "praveen@gmail.com",
+    "password": "praveen",
+    "confirmPassword": "praveen"
 }
 
 ###
 POST http://localhost:8080/api/login
+
 Accept: application/json
 Content-Type: application/json
 {
-    "email": "vijay@gmail.com",
-    "password": "vijay123",
+    "email": "shiva@gmail.com",
+    "password": "shiva123",
 }
 ###
-GET http://localhost:8080/users/contacts/all
 
-Content-Type:application/json
-Accept:application/json
+POST http://localhost:8080/api/contacts
+Accept: application/json
+Content-Type: application/json
 
+{
+    "name": "John Doe",
+    "designation": "Software Engineer",
+    "company": "ABC Inc.",
+    "industry": "Technology",
+    "email": "john.doe@example.com",
+    "phoneNumber": "+1234567890",
+    "country": "United States"
+}
+
+###
+GET http://localhost:8080/api/user_contacts/vijay@gmail.com
+
+Accept: application/json
+Content-Type: application/json
