@@ -55,17 +55,17 @@ router.post('/contacts/:email', verifyToken, async (req, res) => {
 });
 
 //contacts associated with the user
-router.get("/user_contacts/:email",verifyToken, async (req, res) => {
+router.get("/user_contacts/:id", verifyToken, async (req, res) => {
     try {
-        const userEmail = req.params.email;
-        console.log(userEmail);
-        const contacts = await Contacts.find({ email: userEmail });
+        const userId = req.params.id;
+        console.log(userId);
+        const contacts = await Contacts.find({ id: userId });
         res.status(200).json(contacts);
     }
-    catch(err){
-        console.log("Error fetching contacts",err);
+    catch (err) {
+        console.log("Error fetching contacts", err);
         res.status(500).json({
-            error:"Internal service error"
+            error: "Internal service error"
         })
     }
 })
@@ -99,68 +99,58 @@ router.post('/import', upload.single('file'), verifyToken, async (req, res) => {
     }
 });
 
-router.get("/user/:Id", async (req, res) => {
+
+router.delete("/contacts/:id", async (req, res)=> {
     try {
-        const userId = req.params.Id;
-        // Assuming you have a model called User
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-        res.status(200).json(user);
+        const user = await Contacts.findByIdAndDelete(req.params.id);
+        res.status(200).json({})
+        message: "Deleted Contacts", user
+    }
+    catch(err){
+        res.status(400).json({err: err.message})
+    }
+})
+
+
+
+router.get(`/contacts/${User.id}`,verifyToken,async(req, res)=>{
+    try{
+        const userId=req.userId;
+        const contacts=await Contacts.find({user:userId});
+        res.status(200).json(contacts);
+    }
+    catch(err){
+        console.log("Error fetching contacts",err);
+        res.status(500).json({
+            message: err.message
+        })
+    }
+})
+
+
+
+
+
+
+
+
+
+
+
+// Route for adding a new contact
+router.post('/', async (req, res) => {
+    const { name, designation, company, industry, email, phoneNumber, country } = req.body;
+    const userId = req.User.userId; // Extracted from JWT token
+
+    try {
+        const newContact = new Contacts({ userId, name, designation, company, industry, email, phone, country });
+        await newContact.save();
+        res.status(201).json(newContact);
     } catch (error) {
-        console.error("Error fetching user:", error);
-        res.status(500).json({ error: 'Internal server error' });
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Failed to create contact' });
     }
 });
-
-
-// router.get(`/contacts/${userId}`,verifyToken,async(req, res)=>{
-//     try{
-//         const userId=req.userId;
-//         const contacts=await Contacts.find({user:userId});
-//         res.status(200).json(contacts);
-//     }
-//     catch(err){
-//         console.log("Error fetching contacts",err);
-//         res.status(500).json({
-//             message: err.message
-//         })
-//     }
-// })
-
-
-
-
-
-
-
-
-
-
-
-// // Route for adding a new contact
-// router.post("/contacts", verifyToken, async (req, res) => {
-//     try {
-//         const data = req.body;
-//         data.forEach(contact => {
-//             contact.user = req.userId;
-//         })
-//         const newContact = await Contacts.create(data);
-//         console.log(newContact);
-//         res.status(201).json({
-//             message: "Contact Created Successfully",
-//             contact: newContact
-//         });
-//     } catch (err) {
-//         console.error("Error creating contact:", err);
-//         res.status(500).json({
-//             message: "Internal server error"
-//         });
-//     }
-// });
-
-
 
 router.use(errorHandler); // Mount error handling middleware
 module.exports = router;

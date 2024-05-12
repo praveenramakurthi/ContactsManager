@@ -5,7 +5,6 @@ const Import = ({ onFileSelect }) => {
     const file = e.target.files[0];
     onFileSelect(file);
   };
-  
   return (
     <div>
       <input

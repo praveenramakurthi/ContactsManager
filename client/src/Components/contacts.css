@@ -39,6 +39,10 @@ input[type="search"] {
   font-style: Titanium;
   font-size: medium;
   border-radius: 6px;
+  z-index: 1px;
+}
+.search:hover {
+  border: none !important;
 }
 .left-container i {
   left: 63px;
@@ -92,8 +96,6 @@ tr {
   position: relative; 
 } */
 
-
-
 tbody {
   position: absolute;
   padding-left: 26px;
@@ -107,19 +109,72 @@ tbody {
   display: flex;
   /* position: absolute; */
   padding-right: 20px;
-  width: 929px;
+  width: 950px;
   margin-bottom: 10px;
+  padding: 10px;
 }
 
 th:nth-child(1) {
   width: 20px; /* Larger gap between every 2nd field */
   padding-right: 100px;
 }
-.designation{
+.designation {
   position: relative;
   top: 15px;
   float: left;
 }
-.seperator2{
+.seperator2 {
+}
 
+.table-data:hover {
+  background-color: #b2dfff6e;
+  box-shadow: 1px 1px 20px 0px #b2dfff6e;
+}
+
+.table-container tbody tr:nth-child(even) {
+  background-color: #b2dfff4f;
+}
+
+.count-contacts {
+  border: none;
+}
+ul {
+  position: absolute;
+  left: -36px;
+}
+
+hr {
+  width: 1037px;
+  position: absolute;
+  top: 62px;
+  border: 2px solid #eaeaea;
+}
+/* D:\ContactsManager-master\ContactsManager-master\client\src\Components\contacts.css */
+.user-container {
+  position: absolute;
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  display: flex;
+  align-items: center;
+  left: 825px;
+}
+.user-image img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-details p {
+  margin: 0;
+}
+
+.totalcontacts {
+  cursor: pointer;
+  padding: 20px;
+  border: none;
+  background: #2da5fc;
+  left: 43px;
+  position: absolute;
+  top: 137px;
 }

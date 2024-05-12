@@ -61,6 +61,8 @@ export const AuthContextProvider = ({ children }) => {
       const result = await res.json();
       if (!result.error) {
         localStorage.setItem("token", result.token);
+        localStorage.setItem("user", result.user);
+        
         setUser(result.user);
         toast.success(`Logged in ${result.user.name}`);
 

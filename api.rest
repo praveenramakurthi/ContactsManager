@@ -3,9 +3,9 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "email": "praveen@gmail.com",
-    "password": "praveen",
-    "confirmPassword": "praveen"
+    "email": "teju@gmail.com",
+    "password": "teju123",
+    "confirmPassword": "teju123"
 }
 
 ###
@@ -34,7 +34,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/api/user_contacts/vijay@gmail.com
+GET http://localhost:8080/api/vijay@gmail.com
 
 Accept: application/json
 Content-Type: application/json

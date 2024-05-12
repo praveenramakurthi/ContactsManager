@@ -13,12 +13,10 @@ library.add(faTrash, faEdit, faFileExport, faFileImport);
 export default function Contacts() {
   const { email } = queryString.parse(window.location.search);
   // console.log(email);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
   const [search, setSearch] = useState("");
   const [selectedContacts, setSelectedContacts] = useState([]);
-  const [contacts, setContacts] = useState([
-    // { name: 'joicoe', designation: 'ioeh', company: 'c keui', industry: 'cwoecikw', email: 'pra@gmail.com', phoneNumber: '72893003', country: 'jboweiw' },
-  ]);
+  const [contacts, setContacts] = useState([]);
   const [detailsAdded, setDetailsAdded] = useState(false);
 
   const handleLogout = () => {
@@ -27,16 +25,20 @@ export default function Contacts() {
   }
 
   // Function to fetch user data
-  const fetchUserData = async (Id) => {
+  const fetchUserData = async (id) => {
     try {
-      debugger;
+      // debugger;
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:8080/api/user/${Id}`, {
+      // setUser(localStorage.getItem('user'));
+      const user1 = localStorage.getItem('user');
+      // debugger;
+      const response = await fetch(`http://localhost:8080/api/user/${id}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
         },
       });
+
       if (response.ok) {
         const userData = await response.json();
         setUser(userData);
@@ -51,30 +53,57 @@ export default function Contacts() {
     fetchUserData();
   }, []);
 
-  const handleDelete = async (contactId) => {
+  // const handleDelete = async (contactId) => {
+  //   try {
+  //     // debugger;
+
+  //     console.log('Deleting contact with ID:', contactId);
+  //     const token = localStorage.getItem('token');
+  //     for (const id of selectedContacts) {
+  //       const response = await fetch(`http://localhost:8080/api/contacts/${id}`, {
+  //         method: 'DELETE',
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       });
+  //       if (response.ok) {
+  //         // Remove the deleted contact from the state
+  //         setContacts(contacts.filter(contact => contact._id !== id));
+  //         console.log(`Contact with ID ${id} deleted successfully.`);
+  //       } else {
+  //         console.error(`Failed to delete contact with ID ${id}.`);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error('Error deleting contact:', error);
+  //   }
+  // }
+
+  const handleDelete = async () => {
     try {
-      // debugger;
-      console.log('Deleting contact with ID:', contactId);
-      const token = localStorage.getItem('token');
-      for (const id of selectedContacts) {
-        const response = await fetch(`http://localhost:8080/api/contacts/${id}`, {
-          method: 'DELETE',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        if (response.ok) {
-          // Remove the deleted contact from the state
-          setContacts(contacts.filter(contact => contact._id !== id));
-          console.log(`Contact with ID ${id} deleted successfully.`);
-        } else {
-          console.error(`Failed to delete contact with ID ${id}.`);
-        }
+      for (const contactId of selectedContacts) {
+        await fetch("http://localhost:8080/api/contacts/${contactId}", {
+          method: 'DELETE'
+        })
       }
+      // After deletion, fetch and update the contacts list
+      const response = await fetch('http://localhost:8080/api/contacts');
+      if (!response.ok) {
+        throw new Error('Failed to fetch contacts');
+      }
+      const data = await response.json();
+      setContacts(data);
+      setSelectedContacts([]); // Clear selected contacts
+      // setShowConfirmation(false); // Hide confirmation dialog
+      // setShowSuccessMessage(true); // Show success message
+      // setTimeout(() => {
+      //   setShowSuccessMessage(false); // Hide success message after 3 seconds
+      // }, 3000);
     } catch (error) {
-      console.error('Error deleting contact:', error);
+      console.error('Error deleting contacts:', error);
+      // Handle error, show error message, etc.
     }
-  }
+  };
 
   const handleCheckboxChange = (contactId) => {
     if (selectedContacts.includes(contactId)) {
@@ -84,8 +113,8 @@ export default function Contacts() {
     }
   };
 
-
   const handleImportFiles = (files) => {
+
     var reader = new FileReader();
     reader.onload = function (e) {
       const csvData = reader.result;
@@ -98,8 +127,10 @@ export default function Contacts() {
   }
 
   const saveImportedData = async (data) => {
+
     try {
       console.log('Data to be saved:', data);
+      // await data.save();
       const token = localStorage.getItem('token');
       const response = await fetch('http://localhost:8080/api/user', {
         headers: {
@@ -132,26 +163,74 @@ export default function Contacts() {
     }
   }
 
-
-
   const handleExport = () => {
+    try {
+      // Convert contacts data to CSV format
+      const csvData = contacts.map(contact => {
+        return [
+          contact.name,
+          contact.designation,
+          contact.company,
+          contact.industry,
+          contact.email,
+          contact.phoneNumber,
+          contact.country
+        ].join(',');
+      }).join('\n');
 
+      // Create a Blob object with CSV data
+      const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+
+      // Create a download link
+      const link = document.createElement('a');
+      if (link.download !== undefined) {
+        // Create a link to the file
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', 'contacts.csv');
+        // Append the link to the body
+        document.body.appendChild(link);
+        // Trigger the download
+        link.click();
+        // Clean up
+        document.body.removeChild(link);
+      } else {
+        console.error('Exporting CSV is not supported in this browser.');
+      }
+    } catch (error) {
+      console.error('Error exporting contacts:', error);
+    }
   }
+
   return (
     <div>
       <div className="container">
         <div className="left-container">
           <p className="logo">Logo</p>
+          <button className='totalcontacts'>Total Contacts</button>
           <i className="fa fa-sign-out" aria-hidden="true" onClick={handleLogout}>LogOut</i>
         </div>
         <div className="right-container">
-          <i className="fa-sharp fa-solid fa-magnifying-glass" style={{ position: 'relative' }}></i>
-          <input className="search" type="search"
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by Email Id....." />
+          <p>Total Contacts {contacts.length}</p>
+          <div>
+            <i className="fa-sharp fa-solid fa-magnifying-glass" style={{ top: "34px", left: "456px", position: "absolute", zIndex: 1 }}></i>
+            <input className="search" type="search"
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search by Email Id....." />
+          </div>
+          <div className='user-container'>
+            <div className='user-image'>
+              <img src="6fc120580122cc5c1443394d7cbd3883.jpeg" alt="user" />
+            </div>
+            <div className='user-details'>
+              <p style={{ fontSize: "20px", color: "#0a89e4f0" }} >{email}</p>
+              <p className='user-type'>Super Admin</p>
+            </div>
+          </div>
+          <hr />
           <div className="top-buttons">
             <FontAwesomeIcon icon={faTrash} style={{ left: '10px', position: 'absolute', top: '7px' }} />
-            <button className='delete' onClick={(contactId) => handleDelete(contactId)}>Delete</button>
+            <button className='delete' onClick={(contactsId) => handleDelete(contactsId)}>Delete</button>
 
             <ReactFileReader handleFiles={handleImportFiles} fileTypes={'.csv'}>
               <div>
@@ -161,10 +240,10 @@ export default function Contacts() {
             </ReactFileReader>
 
             <FontAwesomeIcon icon={faFileExport} style={{ position: 'absolute', top: '7px', left: '229px' }} />
-            <button className='export' >Export</button>
+            <button className='export' onClick={handleExport} >Export</button>
           </div>
           <div>
-          <p>Welcome {user.email} </p>
+            {/* <p>Welcome {user} </p> */}
           </div>
           <div>
             <table className="table-container">
@@ -197,8 +276,8 @@ export default function Contacts() {
                         <td>
                           <input
                             type="checkbox"
-                            checked={selectedContacts.includes(contact._id)}
-                            onChange={() => handleCheckboxChange(contact._id)}
+                            checked={selectedContacts.includes(contact.phoneNumber)}
+                            onChange={() => handleCheckboxChange(contact.phoneNumber)}
                           />
                         </td>
                         <td className="contact1">{contact.name}</td>
