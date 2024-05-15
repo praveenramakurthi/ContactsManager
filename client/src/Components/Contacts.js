@@ -18,6 +18,9 @@ export default function Contacts() {
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [contacts, setContacts] = useState([]);
   const [detailsAdded, setDetailsAdded] = useState(false);
+  const [delClick, setDelClick] = useState(false);
+  const [isDelComplete, setIsDelComplete] = useState(false);
+
 
   const handleLogout = () => {
     alert("Want to Logout?");
@@ -202,6 +205,14 @@ export default function Contacts() {
     }
   }
 
+  // const deleteBtnClicked=async()=>{
+  //   const userIds=arrCheck;
+  //   userIds.map(async(id)=>{
+  //     return await deleteContacts(id);
+  //   });
+  //   fetchContacts();
+  // }
+
   return (
     <div>
       <div className="container">
@@ -213,7 +224,7 @@ export default function Contacts() {
         <div className="right-container">
           <p>Total Contacts {contacts.length}</p>
           <div>
-            <i className="fa-sharp fa-solid fa-magnifying-glass" style={{ top: "34px", left: "456px", position: "absolute", zIndex: 1 }}></i>
+            <i className="fa-sharp fa-solid fa-magnifying-glass" style={{ top: "26px", left: "387px", position: "absolute", zIndex: 1 }}></i>
             <input className="search" type="search"
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by Email Id....." />
@@ -229,9 +240,57 @@ export default function Contacts() {
           </div>
           <hr />
           <div className="top-buttons">
-            <FontAwesomeIcon icon={faTrash} style={{ left: '10px', position: 'absolute', top: '7px' }} />
-            <button className='delete' onClick={(contactsId) => handleDelete(contactsId)}>Delete</button>
-
+            <div>
+              <FontAwesomeIcon icon={faTrash} style={{ left: '10px', position: 'absolute', top: '7px' }} />
+              <button className='delete' onClick={(contactsId) => handleDelete(contactsId)}>Delete</button>
+            </div>
+            {/* {
+              delClick && (
+                <div className='popup'>
+                  {(isDelComplete) ? (
+                    <>
+                      <div>
+                        <img src="Images/delIconComp.png" alt="PopUp" />
+                      </div>
+                      <div className='popuptext'>Deleted Contacts</div>
+                      <div className='popupbtncontainer'>
+                        <button className='popupbtn' onClick={() => {
+                          setDelClick(!delClick);
+                          setIsDelComplete(false);
+                          document.location.reload();
+                        }} >
+                          Cancel
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div>
+                        <img src="Images/impDel.png" alt="PopUp" />
+                      </div>
+                      <div className='popuptext'>Delete Contacts</div>
+                      <div className='popuplink'>
+                        Sure you want to delete this Contacts?
+                      </div>
+                      <div className='popupbtncontainer'>
+                        <button className='popupbtn' onClick={() => {
+                          setDelClick(!delClick);
+                          setIsDelComplete(false);
+                        }}>
+                          Cancel
+                        </button>
+                        <button className='popupbtn' onClick={() => {
+                          setIsDelComplete(true);
+                          deleteBtnClicked();
+                        }}>
+                          Ok
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              )
+            } */}
             <ReactFileReader handleFiles={handleImportFiles} fileTypes={'.csv'}>
               <div>
                 <FontAwesomeIcon icon={faFileImport} style={{ transform: 'rotate(90deg)', top: '7px', position: 'absolute', left: '117px' }} />

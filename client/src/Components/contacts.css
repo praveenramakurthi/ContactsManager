@@ -22,16 +22,16 @@
 .right-container {
   position: absolute;
   left: 232px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   /* width: 100%; */
   /* background: red; */
 }
 input[type="search"] {
   padding-left: 45px;
-  top: 23px;
+  top: 16px;
   height: 35px;
   position: absolute;
-  left: 442px;
+  left: 375px;
   width: 350px;
   /* font-style:Titillium Web; */
   border: none;
@@ -144,7 +144,7 @@ ul {
 }
 
 hr {
-  width: 1037px;
+  width: 991px;
   position: absolute;
   top: 62px;
   border: 2px solid #eaeaea;
@@ -156,7 +156,7 @@ hr {
   right: 10px; /* Adjust as needed */
   display: flex;
   align-items: center;
-  left: 825px;
+  left: 743px;
 }
 .user-image img {
   width: 40px;

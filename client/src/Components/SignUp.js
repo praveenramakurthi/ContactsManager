@@ -187,10 +187,10 @@ export default function SignUp() {
                     <input type="email" name="email" placeholder="Mail ID"
                         value={credentials.email}
                         onChange={handleInputChange} />
-                    <input type="password" name="Password" placeholder="Password"
+                    <input type="password" name="password" placeholder="Password"
                         value={credentials.password}
                         onChange={handleInputChange} />
-                    <input type="password" name="Password" placeholder="Confirm Password"
+                    <input type="password" name="confirmPassword" placeholder="Confirm Password"
                         value={credentials.confirmPassword}
                         onChange={handleInputChange} />
                     <button type="submit">Sign Up</button>

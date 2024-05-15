@@ -3,9 +3,9 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "email": "teju@gmail.com",
-    "password": "teju123",
-    "confirmPassword": "teju123"
+    "email": "hello@gmail.com",
+    "password": "hello123",
+    "confirmPassword": "hello123"
 }
 
 ###

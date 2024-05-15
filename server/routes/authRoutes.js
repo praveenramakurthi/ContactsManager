@@ -29,7 +29,6 @@ router.post("/register", async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
         await User.create({ email, password: hashedPassword });
-        await userAlreadyExists.save();
         return res.status(201).json({ message: "User created successfully." });
 
     } catch (err) {
@@ -37,6 +36,7 @@ router.post("/register", async (req, res) => {
         return res.status(500).json({ error: "An error occurred while registering the user." });
     }
 });
+
 
 router.get('/:email', (req, res) => {
     const userEmail = req.params.email;
@@ -46,37 +46,33 @@ router.get('/:email', (req, res) => {
 
 router.post("/login", async (req, res) => {
     const { email, password } = req.body;
-
-    if (!email || !password) {
-        return res.status(400).json({ error: "Please provide all required fields." });
-    }
-
-    const emailReg = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    if (!emailReg.test(email)) {
-        return res.status(400).json({ error: "Please enter a valid email address." });
-    }
     try {
-        const doesUserExists = await User.findOne({ email });
-        if (!doesUserExists) {
-            return res.status(400).json({ error: 'Invalid email or password.' });
+        if (!email || !password) {
+            return res.status(400).json({ message: "All fields are required" });
         }
 
-        const doesPasswordMatch = await bcrypt.compare(password, doesUserExists.password);
-        if (!doesPasswordMatch) {
-            return res.status(400).json({ error: 'Invalid email or password.' });
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: "Email or password not matched" });
         }
 
-        const payload = { _id: doesUserExists._id };
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        if (!passwordMatch) {
+            return res.status(400).json({ message: "Email or password not matched" });
+        }
+
+        const payload = { _id: user._id };
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
             expiresIn: "1h",
         });
 
-        const user = { ...doesUserExists._doc, password: undefined };
-        return res.status(200).json({ token, user });
+        // Omit password from user object before sending it in the response
+        const userResponse = { ...user.toJSON(), password: undefined };
+
+        return res.status(200).json({ token, user: userResponse });
     } catch (err) {
         console.error("Error logging in:", err);
-        return res.status(500).json({ error: err.message });
+        return res.status(500).json({ error: "An error occurred while logging in." });
     }
 });
 
